@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import SearchBar from "./components/SearchBar/SearchBar.js";
 import Playlist from "./components/Playlist/Playlist.js";
+import Tracklist from "./components/Tracklist/Tracklist.js";
 
 function App() {
   return (
@@ -11,7 +12,10 @@ function App() {
         </header>
         <main>
             <SearchBar />
-            <Playlist />
+            <div className="trackLists">
+                <Tracklist />
+                <Playlist />
+            </div>
         </main>
     </div>
   );

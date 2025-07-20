@@ -4,10 +4,10 @@ import Tracklist from "../Tracklist/Tracklist";
 import {trackList} from "../Tracklist/tracklist-sample.js";
 
 function SearchResults() {
-
+    const filteredTrackList = []
     return (
-        <div className={styles.Tracklist}>
-            <Tracklist tracks={trackList} />
+        <div className={styles.content}>
+            <Tracklist tracks={filteredTrackList} />
         </div>
     )
 }

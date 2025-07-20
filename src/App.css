@@ -6,6 +6,12 @@
   height: 100%;
 }
 
+.trackLists {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

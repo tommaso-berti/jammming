@@ -6,7 +6,7 @@ function Tracklist(props) {
     const tracks = props.tracks;
 
     if (!tracks || tracks.length === 0) {
-        return null; // Non renderizza nulla
+        return null;
     }
 
     return (
