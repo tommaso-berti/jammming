@@ -1,0 +1,23 @@
+li {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    justify-content: left;
+    width: 100%;
+    border: 2px solid darkviolet;
+    margin: 1rem;
+    padding: 0.8rem;
+    border-radius: 1rem;
+}
+
+h1 {
+    font-size: xx-large;
+}
+
+h2 {
+    font-size: x-large;
+}
+
+h3 {
+    font-size: larger;
+}

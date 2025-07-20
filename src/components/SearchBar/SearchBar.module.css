@@ -1,0 +1,31 @@
+/*screen reader only*/
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.searchBox {
+    font-size: 2rem;
+    padding: 1rem;
+    width: 30%;
+    border-radius: 1rem;
+}
+
+.submit {
+    font-size: 2rem;
+    border-radius: 1rem;
+}
+
+.srOnly {
+    position: absolute;      /* Removes the element from normal flow */
+    width: 1px;              /* Makes it visually invisible */
+    height: 1px;
+    padding: 0;
+    margin: -1px;            /* Moves it out of view */
+    overflow: hidden;        /* Hides overflowing content */
+    clip: rect(0, 0, 0, 0);  /* Completely clips the element */
+    white-space: nowrap;     /* Prevents line breaks */
+    border: 0;
+}
