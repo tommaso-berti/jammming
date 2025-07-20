@@ -1,0 +1,15 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.container {
+    border: 1px solid darkviolet;
+}
+
+.submit {
+    font-size: 2rem;
+    border-radius: 1rem;
+}

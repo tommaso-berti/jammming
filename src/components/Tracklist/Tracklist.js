@@ -4,6 +4,11 @@ import Track from '../Track/Track.js'
 
 function Tracklist(props) {
     const tracks = props.tracks;
+
+    if (!tracks || tracks.length === 0) {
+        return null; // Non renderizza nulla
+    }
+
     return (
         <ul>
             {tracks.map((track) => {

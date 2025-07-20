@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import SearchBar from "./components/SearchBar/SearchBar.js";
+import Playlist from "./components/Playlist/Playlist.js";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         </header>
         <main>
             <SearchBar />
+            <Playlist />
         </main>
     </div>
   );
