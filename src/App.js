@@ -12,7 +12,7 @@ function App() {
         </header>
         <main>
             <SearchBar />
-            <div className="trackLists">
+            <div className="columns">
                 <Tracklist />
                 <Playlist />
             </div>

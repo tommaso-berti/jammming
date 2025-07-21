@@ -1,38 +1,27 @@
 export const trackList = [
-    {
-        name: 'Blinding Lights',
-        artist: 'The Weeknd',
-        album: 'After Hours',
-        id: '1'
-    },
-    {
-        name: 'Levitating',
-        artist: 'Dua Lipa',
-        album: 'Future Nostalgia',
-        id: '2'
-    },
-    {
-        name: 'As It Was',
-        artist: 'Harry Styles',
-        album: 'Harry’s House',
-        id: '3'
-    },
-    {
-        name: 'Save Your Tears',
-        artist: 'The Weeknd',
-        album: 'After Hours',
-        id: '4'
-    },
-    {
-        name: 'Watermelon Sugar',
-        artist: 'Harry Styles',
-        album: 'Fine Line',
-        id: '5'
-    },
-    {
-        name: 'Don’t Start Now',
-        artist: 'Dua Lipa',
-        album: 'Future Nostalgia',
-        id: '6'
-    }
+    { name: 'Blinding Lights', artist: 'The Weeknd', album: 'After Hours', id: '1' },
+    { name: 'Levitating', artist: 'Dua Lipa', album: 'Future Nostalgia', id: '2' },
+    { name: 'As It Was', artist: 'Harry Styles', album: 'Harry’s House', id: '3' },
+    { name: 'Save Your Tears', artist: 'The Weeknd', album: 'After Hours', id: '4' },
+    { name: 'Watermelon Sugar', artist: 'Harry Styles', album: 'Fine Line', id: '5' },
+    { name: 'Don’t Start Now', artist: 'Dua Lipa', album: 'Future Nostalgia', id: '6' },
+    { name: 'Peaches', artist: 'Justin Bieber', album: 'Justice', id: '7' },
+    { name: 'drivers license', artist: 'Olivia Rodrigo', album: 'SOUR', id: '8' },
+    { name: 'MONTERO', artist: 'Lil Nas X', album: 'Montero', id: '9' },
+    { name: 'Positions', artist: 'Ariana Grande', album: 'Positions', id: '10' },
+    { name: 'Bad Habits', artist: 'Ed Sheeran', album: '=', id: '11' },
+    { name: 'Stay', artist: 'The Kid LAROI, Justin Bieber', album: 'Stay', id: '12' },
+    { name: 'Good 4 U', artist: 'Olivia Rodrigo', album: 'SOUR', id: '13' },
+    { name: 'Shivers', artist: 'Ed Sheeran', album: '=', id: '14' },
+    { name: 'Easy On Me', artist: 'Adele', album: '30', id: '15' },
+    { name: 'Industry Baby', artist: 'Lil Nas X, Jack Harlow', album: 'Montero', id: '16' },
+    { name: 'Ghost', artist: 'Justin Bieber', album: 'Justice', id: '17' },
+    { name: 'Heat Waves', artist: 'Glass Animals', album: 'Dreamland', id: '18' },
+    { name: 'Late Night Talking', artist: 'Harry Styles', album: 'Harry’s House', id: '19' },
+    { name: 'About Damn Time', artist: 'Lizzo', album: 'Special', id: '20' },
+    { name: 'Anti-Hero', artist: 'Taylor Swift', album: 'Midnights', id: '21' },
+    { name: 'Unholy', artist: 'Sam Smith, Kim Petras', album: 'Gloria', id: '22' },
+    { name: 'Flowers', artist: 'Miley Cyrus', album: 'Endless Summer Vacation', id: '23' },
+    { name: 'Kill Bill', artist: 'SZA', album: 'SOS', id: '24' },
+    { name: 'Calm Down', artist: 'Rema, Selena Gomez', album: 'Rave & Roses', id: '25' }
 ];

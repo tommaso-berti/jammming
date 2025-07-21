@@ -1,13 +1,14 @@
 li {
     display: flex;
     align-items: center;
-    gap: 2rem;
-    justify-content: left;
-    width: 100%;
+    gap: 1rem;
+    justify-content: flex-start;
+    min-width: 0;
     border: 2px solid darkviolet;
     margin: 1rem;
     padding: 0.8rem;
     border-radius: 1rem;
+    box-sizing: border-box;
 }
 
 h1 {

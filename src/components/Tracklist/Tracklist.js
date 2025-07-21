@@ -1,17 +1,17 @@
 import React from 'react';
 import style from './Tracklist.module.css';
 import Track from '../Track/Track.js'
+import {trackList} from "./tracklist-sample.js";
 
 function Tracklist(props) {
-    const tracks = props.tracks;
-
-    if (!tracks || tracks.length === 0) {
-        return null;
+    let tracksToShow = props.tracks || [];
+    if (tracksToShow.length === 0) {
+        tracksToShow = trackList
     }
 
     return (
         <ul>
-            {tracks.map((track) => {
+            {tracksToShow.map((track) => {
                 return (<Track track={track} key={track.id} />)
             })}
         </ul>
