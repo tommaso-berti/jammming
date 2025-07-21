@@ -3,8 +3,20 @@ import './App.css';
 import SearchBar from "./components/SearchBar/SearchBar.js";
 import Playlist from "./components/Playlist/Playlist.js";
 import Tracklist from "./components/Tracklist/Tracklist.js";
+import {useState} from "react";
+import {trackList} from "./dataSamples/tracklist-sample";
+
 
 function App() {
+
+    const [playlists, setPlaylists] = useState([]);
+    const addToPlaylist = (track) => {
+        setPlaylists(prev => [...prev, track]);
+    }
+    const removeFromPlaylist = (trackToRemove) => {
+        setPlaylists(prev => prev.filter(track => track.id !== trackToRemove.id));
+    };
+
   return (
     <div className="App">
         <header>
@@ -13,8 +25,8 @@ function App() {
         <main>
             <SearchBar />
             <div className="columns">
-                <Tracklist />
-                <Playlist />
+                <Tracklist onAction={addToPlaylist} tracks={trackList} />
+                <Playlist  tracks={playlists} onAction={removeFromPlaylist} />
             </div>
         </main>
     </div>

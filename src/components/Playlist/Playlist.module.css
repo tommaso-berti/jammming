@@ -29,3 +29,18 @@
     white-space: nowrap;     /* Prevents line breaks */
     border: 0;
 }
+
+input {
+    font-size: 2rem;
+    padding: 1rem;
+    width: 80%;
+    border-radius: 1rem;
+    margin-top: 2rem;
+}
+
+.submit {
+    font-size: 1rem;
+    border-radius: 1rem;
+    width:  20%;
+    cursor: pointer;
+}

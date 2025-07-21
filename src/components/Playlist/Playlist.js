@@ -1,32 +1,38 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styles from './Playlist.module.css';
 import TrackList from '../Tracklist/Tracklist.js'
 
-function Playlist(props) {
-    const addedTracks = [    { name: 'Blinding Lights', artist: 'The Weeknd', album: 'After Hours', id: '1' },
-        { name: 'Levitating', artist: 'Dua Lipa', album: 'Future Nostalgia', id: '2' },
-        { name: 'As It Was', artist: 'Harry Styles', album: 'Harry’s House', id: '3' },]
+function Playlist({tracks, onAction}) {
 
-    const [playlist, setPlaylist] = React.useState([])
+    const [playlistName, setPlaylistName] = useState('')
+    const [playlistsList, setPlaylistsList] = useState([])
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!playlistName.trim()) return;
+        const newPlaylist = {
+            playlistName,
+            tracksId: tracks.map(track => track.id)
+        };
+        setPlaylistsList(prev => [...prev, newPlaylist]);
+        setPlaylistName('');
+    };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        alert('Playlist added!');
-    }
+    console.log(playlistsList)
 
     return (
         <div className={styles.playlistContainer}>
             <form onSubmit={handleSubmit} className={styles.form}>
-                <label htmlFor="search-box" className={styles.srOnly}>Search</label>
+                <label htmlFor="playlist-Name" className={styles.srOnly}>Search</label>
                 <input
                     type="text"
-                    name="search-box"
-                    id="search-box"
+                    name="playlist-Name"
+                    id="playlist-Name"
                     placeholder="Add playlist title here"
-                    className={styles}
                     autoComplete='off'
+                    value={playlistName}
+                    onChange={(event) => setPlaylistName(event.target.value)}
                 />
-                <TrackList tracks={addedTracks} />
+                <TrackList tracks={tracks} onAction={onAction} actionLabel='-'/>
                 <input type="submit" value="Add playlist" className={styles.submit} />
             </form>
         </div>

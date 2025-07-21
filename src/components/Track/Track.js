@@ -1,17 +1,14 @@
 import React from "react";
 import styles from './Track.module.css';
 
-function Track(props) {
-    const name = props.track.name;
-    const artist = props.track.artist;
-    const album  = props.track.album;
-    const id = props.track.id;
+function Track({track, onAction, actionLabel}) {
 
     return (
         <li>
-            <h1>{name}</h1>
-            <h2>{album}</h2>
-            <h3>{artist}</h3>
+            <h1>{track.name}</h1>
+            <h2>{track.album}</h2>
+            <h3>{track.artist}</h3>
+            <button type="button" className={styles.plusButton} onClick={() => onAction(track)}>{actionLabel}</button>
         </li>
     )
 }

@@ -14,8 +14,10 @@
 }
 
 .submit {
-    font-size: 2rem;
+    font-size: 1rem;
     border-radius: 1rem;
+    width:  10%;
+    cursor: pointer;
 }
 
 .srOnly {
