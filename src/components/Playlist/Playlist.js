@@ -6,15 +6,28 @@ function Playlist({tracks, onAction}) {
 
     const [playlistName, setPlaylistName] = useState('')
     const [playlistsList, setPlaylistsList] = useState([])
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!playlistName.trim()) return;
+        if (tracks.length === 0) return;
         const newPlaylist = {
             playlistName,
             tracksId: tracks.map(track => track.id)
         };
-        setPlaylistsList(prev => [...prev, newPlaylist]);
-        setPlaylistName('');
+        const alreadyExists = playlistsList.some(
+            playlist => playlist.name === newPlaylist.name
+        );
+        if(!alreadyExists) {
+            setPlaylistsList(prev => [...prev, newPlaylist]);
+        }
+        else {
+            setPlaylistsList(prev => {
+                const updated = [...prev];
+                updated[0].playlistName = playlistName;
+                return updated;
+            });
+        }
     };
 
     console.log(playlistsList)
