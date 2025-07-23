@@ -30,7 +30,7 @@ function App() {
     if (!isLoggedIn()) {
         return (
             <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-                <h2>Benvenuto su Jammming Andrea</h2>
+                <h2>Benvenuto su Jammming</h2>
                 <LoginButton />
             </div>
         );
