@@ -1,13 +1,22 @@
-import logo from './logo.svg';
+import React, {useEffect} from "react";
 import './App.css';
 import SearchBar from "./components/SearchBar/SearchBar.js";
 import Playlist from "./components/Playlist/Playlist.js";
 import Tracklist from "./components/Tracklist/Tracklist.js";
 import {useState} from "react";
 import {trackList} from "./dataSamples/tracklist-sample";
-
+import { isLoggedIn, logout } from './auth/auth';
+import LoginButton from './components//LoginButton/LoginButton.js';
+import { handleRedirectCallback } from './auth/callback';
+import SearchResults from "./components/SearchResults/SearchResults";
 
 function App() {
+
+    useEffect(() => {
+        if (window.location.pathname === '/callback') {
+            handleRedirectCallback();
+        }
+    }, []);
 
     const [playlists, setPlaylists] = useState([]);
     const addToPlaylist = (track) => {
@@ -17,14 +26,24 @@ function App() {
         setPlaylists(prev => prev.filter(track => track.id !== trackToRemove.id));
     };
 
+    if (!isLoggedIn()) {
+        return (
+            <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+                <h2>Benvenuto su Jammming</h2>
+                <LoginButton />
+            </div>
+        );
+    }
   return (
     <div className="App">
         <header>
             <h1 style={{backgroundColor: 'darkviolet', color: 'violet', fontSize: '6rem', textAlign: 'center', marginTop: 0}}>Jammming</h1>
+            <button style={{backgroundColor: 'darkviolet', color: 'violet', fontSize: '2rem', textAlign: 'center', marginTop: 0, cursor: 'pointer'}} type="button" onClick={logout}>Logout</button>
         </header>
         <main>
             <SearchBar />
             <div className="columns">
+                <SearchResults />
                 <Tracklist onAction={addToPlaylist} tracks={trackList} />
                 <Playlist  tracks={playlists} onAction={removeFromPlaylist} />
             </div>

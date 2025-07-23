@@ -1,14 +1,16 @@
 import React, {useState} from 'react';
 import styles from './SearchBar.module.css'
 import SearchResults from "../SearchResults/SearchResults.js";
+import {searchTrack} from "../../api/spotify";
 
 function SearchBar(props) {
 
     const [searchString, setSearchString] = useState('');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        alert('search executed')
+        const tracks = await searchTrack(searchString);
+        console.log(tracks);
     }
 
     return (
@@ -24,6 +26,7 @@ function SearchBar(props) {
                         placeholder="Search song, artist, album..."
                         className={styles.searchBox}
                         autoComplete='off'
+                        onChange={(event) => setSearchString(event.target.value)}
                     />
                     <input type="submit" value="Search" className={styles.submit} />
                 </form>

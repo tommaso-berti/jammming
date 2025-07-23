@@ -13,6 +13,11 @@
   align-content: space-between;
 }
 
+button {
+  font-size: 1.5rem;
+  
+}
+
 .columns > * {
   flex: 1;
   flex-basis: 0;
