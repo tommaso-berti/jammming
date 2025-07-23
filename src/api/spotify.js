@@ -1,34 +1,65 @@
 import { getAccessToken } from '../auth/auth.js';
 
-export function getUserProfile() {
-    const token = getAccessToken();
-    return fetch('https://api.spotify.com/v1/me', {
-        headers: { Authorization: `Bearer ${token}` }
-    }).then(res => res.json());
+export async function getUserProfile() {
+    try {
+        const token = getAccessToken();
+        const response = await fetch('https://api.spotify.com/v1/me', {
+            headers: {Authorization: `Bearer ${token}`}
+        })
+        if(response.ok) {
+            return await response.json();
+        }
+    } catch (error) {
+        console.error(error);
+    }
 }
 
-export function createPlaylist(userId, name, trackUris) {
+export async function createPlaylist(userId, name) {
+    try {
+        const token = getAccessToken();
+        const response = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name,
+                public: true,
+                description: 'Created with Jammming',
+            })
+        });
+        if(response.ok) {
+            return await response.json();
+        }
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
+export async function addTracksToPlaylist(playlistId, uris) {
     const token = getAccessToken();
-    return fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
+    const response = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            name,
-            public: true,
-            description: 'Created with Jammming',
-            tracks: trackUris
-        })
+        body: JSON.stringify({ uris })
     });
+
+    if (!response.ok) {
+        throw new Error('Failed to add tracks');
+    }
+
+    return await response.json();
 }
 
 export async function searchTrack(query) {
-    const token = getAccessToken();
-    const encodedQuery = encodeURIComponent(query);
-
     try {
+        const token = getAccessToken();
+        const encodedQuery = encodeURIComponent(query);
         const response = await fetch(`https://api.spotify.com/v1/search?q=${encodedQuery}&type=track`, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -36,7 +67,6 @@ export async function searchTrack(query) {
         })
         if (response.ok) {
             const jsonResponse = await response.json();
-            console.log(jsonResponse);
             return jsonResponse.tracks.items.map(track => ({
                 id: track.id,
                 name: track.name,

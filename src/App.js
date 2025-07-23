@@ -4,7 +4,6 @@ import SearchBar from "./components/SearchBar/SearchBar.js";
 import Playlist from "./components/Playlist/Playlist.js";
 import Tracklist from "./components/Tracklist/Tracklist.js";
 import {useState} from "react";
-import {trackList} from "./dataSamples/tracklist-sample";
 import { isLoggedIn, logout } from './auth/auth';
 import LoginButton from './components//LoginButton/LoginButton.js';
 import { handleRedirectCallback } from './auth/callback';
@@ -26,6 +25,8 @@ function App() {
         setPlaylists(prev => prev.filter(track => track.id !== trackToRemove.id));
     };
 
+    const [tracks, setTracks] = useState([]);
+
     if (!isLoggedIn()) {
         return (
             <div style={{ textAlign: 'center', marginTop: '3rem' }}>
@@ -41,10 +42,9 @@ function App() {
             <button style={{backgroundColor: 'darkviolet', color: 'violet', fontSize: '2rem', textAlign: 'center', marginTop: 0, cursor: 'pointer'}} type="button" onClick={logout}>Logout</button>
         </header>
         <main>
-            <SearchBar />
+            <SearchBar onSearchResults={setTracks} />
             <div className="columns">
-                <SearchResults />
-                <Tracklist onAction={addToPlaylist} tracks={trackList} />
+                <SearchResults onAction={addToPlaylist} filteredTracks={tracks} />
                 <Playlist  tracks={playlists} onAction={removeFromPlaylist} />
             </div>
         </main>

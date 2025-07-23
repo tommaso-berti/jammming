@@ -3,14 +3,15 @@ import styles from './SearchBar.module.css'
 import SearchResults from "../SearchResults/SearchResults.js";
 import {searchTrack} from "../../api/spotify";
 
-function SearchBar(props) {
+function SearchBar({onSearchResults}) {
 
     const [searchString, setSearchString] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const tracks = await searchTrack(searchString);
-        console.log(tracks);
+        onSearchResults(tracks);
+        setSearchString('');
     }
 
     return (

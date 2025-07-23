@@ -41,6 +41,6 @@ input {
 .submit {
     font-size: 1rem;
     border-radius: 1rem;
-    width:  20%;
+    max-width:  30%;
     cursor: pointer;
 }

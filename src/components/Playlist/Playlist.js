@@ -1,36 +1,45 @@
 import React, {useState} from 'react';
 import styles from './Playlist.module.css';
 import TrackList from '../Tracklist/Tracklist.js'
+import {createPlaylist, getUserProfile, addTracksToPlaylist} from "../../api/spotify.js";
 
 function Playlist({tracks, onAction}) {
 
-    const [playlistName, setPlaylistName] = useState('')
-    const [playlistsList, setPlaylistsList] = useState([])
+    const [playlistName, setPlaylistName] = useState('');
+    const [playlist, setPlaylist] = useState(null);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!playlistName.trim()) return;
         if (tracks.length === 0) return;
-        const newPlaylist = {
-            playlistName,
-            tracksId: tracks.map(track => track.id)
-        };
-        const alreadyExists = playlistsList.some(
-            playlist => playlist.name === newPlaylist.name
-        );
-        if(!alreadyExists) {
-            setPlaylistsList(prev => [...prev, newPlaylist]);
-        }
-        else {
-            setPlaylistsList(prev => {
-                const updated = [...prev];
-                updated[0].playlistName = playlistName;
-                return updated;
-            });
-        }
+
+        const newTracksId = tracks.map(track => track.id);
+
+        setPlaylist(prev => {
+            if (prev && prev.playlistName === playlistName) {
+                return {
+                    ...prev,
+                    tracksId: newTracksId
+                };
+            } else {
+                return {
+                    playlistName,
+                    tracksId: newTracksId
+                };
+            }
+        });
     };
 
-    console.log(playlistsList)
+    async function handleSaveToSpotify(){
+        const user = await getUserProfile()
+        if(playlist) {
+            const newPlaylist = await createPlaylist(user.id, playlistName)
+            const trackUris = playlist.tracksId.map(id => `spotify:track:${id}`);
+            await addTracksToPlaylist(newPlaylist.id, trackUris)
+        }
+        else
+            alert('Playlist not yet created')
+    }
 
     return (
         <div className={styles.playlistContainer}>
@@ -46,7 +55,8 @@ function Playlist({tracks, onAction}) {
                     onChange={(event) => setPlaylistName(event.target.value)}
                 />
                 <TrackList tracks={tracks} onAction={onAction} actionLabel='-'/>
-                <input type="submit" value="Add playlist" className={styles.submit} />
+                <input type="submit" value='Add playlist' className={styles.submit}/>
+                <input type="button" value='Save to account' className={styles.submit} onClick={handleSaveToSpotify}/>
             </form>
         </div>
     )
