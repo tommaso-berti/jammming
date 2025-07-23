@@ -1,15 +1,26 @@
-#!/bin/bash
+name: Deploy jammming app to VPS
 
-echo "🔁 Pulling latest code..."
-git pull origin main || exit 1
+on:
+  push:
+    branches:
+      - main
 
-echo "📦 Installing dependencies..."
-npm install
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
-echo "🛠️ Building React app..."
-npm run build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-echo "🔐 Fixing permissions..."
-chown -R website_deployer:www-data .
-
-echo "✅ Deploy completed!"
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /srv/www/react-apps/jammming
+            git fetch origin main
+            git reset --hard origin/main
+            bash deploy/update-jammming.sh
