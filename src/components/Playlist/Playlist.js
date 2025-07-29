@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import styles from './Playlist.module.css';
 import TrackList from '../Tracklist/Tracklist.js'
 import {createPlaylist, getUserProfile, addTracksToPlaylist} from "../../api/spotify.js";
+import {c} from "react/compiler-runtime";
 
 function Playlist({tracks, onAction}) {
 
@@ -28,6 +29,7 @@ function Playlist({tracks, onAction}) {
                 };
             }
         });
+        alert('Playlist created successfully')
     };
 
     async function handleSaveToSpotify(){
@@ -35,7 +37,13 @@ function Playlist({tracks, onAction}) {
         if(playlist) {
             const newPlaylist = await createPlaylist(user.id, playlistName)
             const trackUris = playlist.tracksId.map(id => `spotify:track:${id}`);
-            await addTracksToPlaylist(newPlaylist.id, trackUris)
+            try {
+                await addTracksToPlaylist(newPlaylist.id, trackUris)
+                alert('Playlist saved to account')
+            }
+            catch(e) {
+                console.error(e)
+            }
         }
         else
             alert('Playlist not yet created')

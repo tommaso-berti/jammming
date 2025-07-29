@@ -14,7 +14,7 @@ async function generateCodeChallenge(codeVerifier) {
 
 export async function redirectToSpotify() {
     const clientId = 'ce8ff54cf24a46e0a8c58921695cfcf4';
-    const redirectUri = 'https://06f05dc73515.ngrok-free.app/callback';
+    const redirectUri = 'https://d37b50867cc7.ngrok-free.app/callback';
     const scopes = 'playlist-modify-public';
 
     const codeVerifier = generateRandomString(128);

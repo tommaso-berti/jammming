@@ -81,3 +81,41 @@ export async function searchTrack(query) {
         console.log(error);
     }
 }
+
+export async function getUserPlaylist(userId) {
+    try {
+        const token = getAccessToken();
+        const response = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
+            method: 'GET',
+            headers:{
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+        if(response.ok) {
+            const jsonResponse = await response.json();
+            return jsonResponse.items;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export async function getPlaylistTracks(playlistId) {
+    try {
+        const token = getAccessToken();
+        const response = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+            method: 'GET',
+            headers:{
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+        if(response.ok) {
+            const jsonResponse = await response.json();
+            return jsonResponse.items;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}

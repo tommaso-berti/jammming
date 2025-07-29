@@ -2,12 +2,12 @@ import React, {useEffect} from "react";
 import './App.css';
 import SearchBar from "./components/SearchBar/SearchBar.js";
 import Playlist from "./components/Playlist/Playlist.js";
-import Tracklist from "./components/Tracklist/Tracklist.js";
 import {useState} from "react";
 import { isLoggedIn, logout } from './auth/auth';
 import LoginButton from './components//LoginButton/LoginButton.js';
 import { handleRedirectCallback } from './auth/callback';
 import SearchResults from "./components/SearchResults/SearchResults";
+import PlaylistList from "./components/PlaylistList/PlaylistList";
 
 function App() {
 
@@ -47,6 +47,7 @@ function App() {
                 <SearchResults onAction={addToPlaylist} filteredTracks={tracks} />
                 <Playlist  tracks={playlists} onAction={removeFromPlaylist} />
             </div>
+            <PlaylistList />
         </main>
     </div>
   );
