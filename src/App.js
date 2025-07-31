@@ -18,14 +18,18 @@ function App() {
     }, []);
 
     const [playlists, setPlaylists] = useState([]);
-    const addToPlaylist = (track) => {
-        setPlaylists(prev => [...prev, track]);
-    }
-    const removeFromPlaylist = (trackToRemove) => {
-        setPlaylists(prev => prev.filter(track => track.id !== trackToRemove.id));
-    };
 
-    const [tracks, setTracks] = useState([]);
+    function addToPlaylist(track) {
+        setPlaylistTracks(prevTracks => {
+            // Evita duplicati
+            if (prevTracks.some(t => t.id === track.id)) return prevTracks;
+            return [...prevTracks, track];
+        });
+    }
+
+    const removeFromPlaylist = (trackToRemove) => {
+        setPlaylistTracks(prev => prev.filter(track => track.id !== trackToRemove.id));
+    };
 
     if (!isLoggedIn()) {
         return (
@@ -35,6 +39,16 @@ function App() {
             </div>
         );
     }
+
+    const [searchResults, setSearchResults] = useState([]);
+    const [playlistTracks, setPlaylistTracks] = useState([]);
+    const [selectedPlaylistName, setSelectedPlaylistName] = useState('');
+
+    function handleTracksSelected(tracks, name) {
+        setPlaylistTracks(tracks);
+        setSelectedPlaylistName(name);
+    }
+
   return (
     <div className="App">
         <header>
@@ -42,12 +56,15 @@ function App() {
             <button style={{backgroundColor: 'darkviolet', color: 'violet', fontSize: '2rem', textAlign: 'center', marginTop: 0, cursor: 'pointer'}} type="button" onClick={logout}>Logout</button>
         </header>
         <main>
-            <SearchBar onSearchResults={setTracks} />
+            <SearchBar onSearchResults={setSearchResults} />
             <div className="columns">
-                <SearchResults onAction={addToPlaylist} filteredTracks={tracks} />
-                <Playlist  tracks={playlists} onAction={removeFromPlaylist} />
+                <SearchResults onAction={addToPlaylist} filteredTracks={searchResults} />
+                {playlistTracks.length === 0 ? (
+                    <PlaylistList onTracksSelected={handleTracksSelected}/>
+                ) : (
+                    <Playlist tracks={playlistTracks} onAction={removeFromPlaylist} playlistName={selectedPlaylistName}/>
+                )}
             </div>
-            <PlaylistList />
         </main>
     </div>
   );

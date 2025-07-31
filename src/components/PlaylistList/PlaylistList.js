@@ -1,11 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {getUserPlaylist, getUserProfile, getPlaylistTracks} from "../../api/spotify";
-import playlist from "../Playlist/Playlist";
 
-function PlaylistList(props) {
+function PlaylistList({onTracksSelected}) {
 
     const [playlistList, setPlaylistList] = useState([]);
-    const [tracks, setTracks] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,36 +30,35 @@ function PlaylistList(props) {
         console.log('Playlist aggiornate:', playlistList);
     }, [playlistList]);
 
-    async function retrieveTracks(e) {
+    async function retrieveTracks(playlistId, playlistName) {
         try {
-            const tracks = await getPlaylistTracks(e.currentTarget.id)
-            console.log('tracks', tracks)
-            setTracks(tracks.map(({track}) => {
-                return {
-                    name: track.name,
-                    album: track.album.name,
-                    artist: track.artists.map(a => a.name).join(', '),
-                    id: track.id
-                }
-            }))
+            const tracks = await getPlaylistTracks(playlistId)
+            onTracksSelected(
+                tracks.map(({track}) => ({
+                        name: track.name,
+                        album: track.album.name,
+                        artist: track.artists.map(a => a.name).join(', '),
+                        id: track.id
+            })), playlistName
+        );
         } catch (error) {
             console.error(error);
         }
     }
 
-    console.log(tracks);
-
     return (
-        <ul>
-            {playlistList.map((playlist) => {
-                return (
-                    <div style={{border: '2px solid darkviolet', borderRadius: '1rem', margin: '1rem', padding: '1rem'}}>
-                        <h1 id={playlist.id} onClick={retrieveTracks}>{playlist.name}</h1>
-                    </div>
-                )
-            })}
-        </ul>
-    )
+        <div>
+            <ul>
+                {playlistList.map(playlist => (
+                    <li key={playlist.id}>
+                        <button onClick={() => retrieveTracks(playlist.id, playlist.name)}>
+                            {playlist.name}
+                        </button>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 }
 
 export default PlaylistList;

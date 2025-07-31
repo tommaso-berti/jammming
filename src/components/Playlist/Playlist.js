@@ -1,30 +1,33 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from './Playlist.module.css';
 import TrackList from '../Tracklist/Tracklist.js'
 import {createPlaylist, getUserProfile, addTracksToPlaylist} from "../../api/spotify.js";
-import {c} from "react/compiler-runtime";
 
-function Playlist({tracks, onAction}) {
+function Playlist({tracks, onAction, playlistName}) {
 
-    const [playlistName, setPlaylistName] = useState('');
     const [playlist, setPlaylist] = useState(null);
+    const [name, setName] = useState(playlistName || '');
+
+    useEffect(() => {
+        setName(playlistName || '');
+    }, [playlistName]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!playlistName.trim()) return;
+        if (!name.trim()) return;
         if (tracks.length === 0) return;
 
         const newTracksId = tracks.map(track => track.id);
 
         setPlaylist(prev => {
-            if (prev && prev.playlistName === playlistName) {
+            if (prev && prev.playlistName === name) {
                 return {
                     ...prev,
                     tracksId: newTracksId
                 };
             } else {
                 return {
-                    playlistName,
+                    playlistName: name,
                     tracksId: newTracksId
                 };
             }
@@ -57,10 +60,10 @@ function Playlist({tracks, onAction}) {
                     type="text"
                     name="playlist-Name"
                     id="playlist-Name"
-                    placeholder="Add playlist title here"
+                    placeholder="Add new playlist title here"
                     autoComplete='off'
-                    value={playlistName}
-                    onChange={(event) => setPlaylistName(event.target.value)}
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
                 />
                 <TrackList tracks={tracks} onAction={onAction} actionLabel='-'/>
                 <input type="submit" value='Add playlist' className={styles.submit}/>
