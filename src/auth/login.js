@@ -14,7 +14,7 @@ async function generateCodeChallenge(codeVerifier) {
 
 export async function redirectToSpotify() {
     const clientId = 'ce8ff54cf24a46e0a8c58921695cfcf4';
-    const redirectUri = 'https://d37b50867cc7.ngrok-free.app/callback';
+    const redirectUri = 'https://www.jammming.tommasoberti.com/callback';
     const scopes = 'playlist-modify-public';
 
     const codeVerifier = generateRandomString(128);
@@ -22,6 +22,5 @@ export async function redirectToSpotify() {
 
     const codeChallenge = await generateCodeChallenge(codeVerifier);
 
-    const url = `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scope=${encodeURIComponent(scopes)}&redirect_uri=${encodeURIComponent(redirectUri)}&code_challenge_method=S256&code_challenge=${codeChallenge}`;
-    window.location.href = url;
+    window.location.href = `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scope=${encodeURIComponent(scopes)}&redirect_uri=${encodeURIComponent(redirectUri)}&code_challenge_method=S256&code_challenge=${codeChallenge}`;;
 }
