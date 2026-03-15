@@ -1,70 +1,114 @@
-# Getting Started with Create React App
+# Jammming
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React application that integrates with the Spotify Web API to search tracks, view user playlists, and save new playlists directly to a Spotify account.
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+This project was built as a practical frontend exercise focused on OAuth 2.0 (PKCE) authentication, React state management, and REST API integration with external services.
 
-### `npm start`
+## Main Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Spotify login via OAuth 2.0 PKCE
+- Track search by song title, artist, or album
+- Display of the user's Spotify playlists
+- Selection of an existing playlist and loading of its tracks
+- Creation of a new local playlist from selected tracks
+- Saving playlists to Spotify
+- Logout with token cleanup from `localStorage`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tech Stack
 
-### `npm test`
+- React 19
+- Create React App
+- Fetch API
+- Spotify Web API
+- CSS Modules
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Requirements
 
-### `npm run build`
+- Node.js 18+ (recommended)
+- npm 9+ (recommended)
+- Spotify account
+- Spotify App configured in the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Spotify Configuration
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The project currently uses `client_id` and `redirect_uri` values hardcoded in the source code:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- `client_id` in `src/auth/login.js` and `src/auth/callback.js`
+- `redirect_uri` in `src/auth/login.js`
 
-### `npm run eject`
+To use your own Spotify app:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. Create an app in the Spotify Developer Dashboard.
+2. Update the `client_id` in the auth files.
+3. Set the correct `redirect_uri` both in the code and in your Spotify app settings.
+4. Make sure the callback path is `/callback`.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Note: in local development (for example `http://localhost:3000`), `redirect_uri` must exactly match a URI registered in Spotify, otherwise login will fail.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Run the Project
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Install dependencies:
 
-## Learn More
+```bash
+npm install
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Start development server:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+npm start
+```
 
-### Code Splitting
+Create production build:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+npm run build
+```
 
-### Analyzing the Bundle Size
+Run tests:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+npm test
+```
 
-### Making a Progressive Web App
+## Main Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```text
+src/
+  api/
+    spotify.js          # Spotify Web API calls
+  auth/
+    auth.js             # token/session management
+    login.js            # OAuth redirect (PKCE)
+    callback.js         # code -> access token exchange
+  components/
+    SearchBar/
+    SearchResults/
+    Playlist/
+    PlaylistList/
+    Track/
+    Tracklist/
+  App.js                # main UI/state orchestration
+```
 
-### Advanced Configuration
+## Application Flow
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+1. The user logs in with Spotify.
+2. After callback, the access token is stored in `localStorage`.
+3. The user can search tracks and add them to the playlist being built.
+4. Alternatively, the user can open an existing playlist from their account.
+5. The playlist is created and then saved to Spotify with the selected tracks.
 
-### Deployment
+## Possible Improvements
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- Token expiration handling and refresh token support
+- Move `client_id` and URLs to environment variables
+- Better error handling and loading states
+- Non-blocking UI feedback instead of `alert`
+- More tests for components and API integration
 
-### `npm run build` fails to minify
+## Author
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Project developed as a learning exercise on React + Spotify API integration.
